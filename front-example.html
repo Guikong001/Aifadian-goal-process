@@ -1,0 +1,16 @@
+    <p id="process">Progress: 0.0</p>
+    <!-->相关的内容会更新在id为process的html标签中，可以根据自身需求修改<-->
+
+    <script>
+        // 使用 Server-Sent Events (SSE) 从后端获取实时更新
+        const eventSource = new EventSource('https://这里输入你的后端地址/progress-events');
+
+        eventSource.onmessage = function(event) {
+            const progressValue = JSON.parse(event.data).progress;
+            document.getElementById('process').textContent = `Progress: ${progressValue}`;
+        };//这里是监控的爱发电的发电目标进度，可以根据自身需求修改这里的文字
+
+        eventSource.onerror = function(error) {
+            console.error('Error receiving progress updates:', error);
+        };
+    </script>
